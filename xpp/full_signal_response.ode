@@ -1,0 +1,31 @@
+# a model to simulate signal response curve when AMPK induces ULK1 throughout an extra protein
+
+# initial conditions
+init ULK1=0, AMPK=0
+
+# differential equations
+# ULK1 represents the active form of ULK1
+ULK1' = (kaulk + kaulk'*Prot + kaulk"*AMPK)*(ULK1T-ULK1)/(julk + ULK1T-ULK1) - (kiulk + kiulk'*mTOR)*ULK1/(julk + ULK1)
+
+# AMPK represents the active form of AMPK
+AMPK' = (kaak + S)*(AMPKT-AMPK)/(jampk + AMPKT-AMPK) - (kiak + kiak'*ULK1 + kiak"*mTOR)*AMPK/(jampk + AMPK)
+
+# steady state function
+# mTOR represents the active form of mTOR
+mTOR = kamtor*mTORT/(kamtor + kimtor + kimtor'*ULK1 + kimtor"*AMPK + kimtor'"*Prot)
+
+# Prot represents the active form of extra protein
+Prot = ProtT*GK(kapr + kapr'*AMPK,kipr,Jpr,Jpr)
+
+# 'Goldbeter-Koshand' function (GK)
+GB(arg1,arg2,arg3,arg4) = arg2-arg1+arg2*arg3+arg1*arg4
+GK(arg1,arg2,arg3,arg4) = 2*arg1*arg4/(GB(arg1,arg2,arg3,arg4)+sqrt(GB(arg1,arg2,arg3,arg4)^2-4*(arg2-arg1)*arg1*arg4))
+
+# parameters
+p S=0
+p kaulk=0.101, kaulk'=25, kaulk"=0.03, kiulk=0.1, kiulk'=20, julk=0.001, ULK1T=1
+p kaak=2, kiak=0.1, kiak'=3, kiak"=10, AMPKT=1, jampk=0.001
+p kamtor=0.0175, kimtor=0.0125, kimtor'=10, kimtor"=5, kimtor'"=0.1, mTORT=1
+p kapr=0.01, kapr'=10, kipr=20, jpr=0.02, protT=1
+
+done

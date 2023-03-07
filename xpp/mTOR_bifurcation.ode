@@ -1,0 +1,20 @@
+# a simple model to simulate mTOR bifurcation diagram with XPP-AUT
+
+# differential equations
+# mTOR represents the active form of mTOR
+mTOR' = kamtor*(mTORT - mTOR) - (kimtor + kimtor'*ULK1)*mTOR
+# S represents stress level
+S'=0
+
+# algebraic equation 
+ULK1 = ULK1T*GK(kaulk1 + kaulk1'*S,kiulk1 + kiulk1'*mTOR,julk1,julk1)
+
+# 'Goldbeter-Koshand' function (GK)
+GB(arg1,arg2,arg3,arg4) = arg2-arg1+arg2*arg3+arg1*arg4
+GK(arg1,arg2,arg3,arg4) = 2*arg1*arg4/(GB(arg1,arg2,arg3,arg4)+sqrt(GB(arg1,arg2,arg3,arg4)^2-4*(arg2-arg1)*arg1*arg4))
+
+# parameters
+p kaulk1=0.03, kaulk1'=0.2, kiulk1=0.01, kiulk1'=0.2, julk1=0.01, ULK1T=1
+p kamtor=0.1, kimtor=0.01, kimtor'=1, mTORT=1 
+
+done

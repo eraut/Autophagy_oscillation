@@ -1,0 +1,18 @@
+# a simple model to simulate ULK1 bifurcation diagram with XPP-AUT
+
+# differential equations
+# ULK1 represents the active form of ULK1
+ULK1' = (kaulk1 + kaulk1'*S)*(ULK1T - ULK1)/(julk1 + ULK1T - ULK1) - (kiulk1 + kiulk1'*mTOR)*ULK1/(julk1 + ULK1)
+
+# S represents stress level
+S'=0
+
+# algebraic equation 
+# mTOR represents the active form of mTOR
+mTOR = kamtor*mTORT/(kamtor + kimtor + kimtor'*ULK1)
+
+# parameters
+p kaulk1=0.03, kaulk1'=0.2, kiulk1=0.01, kiulk1'=0.3, julk1=0.01, ULK1T=1
+p kamtor=0.1, kimtor=0.01, kimtor'=1, mTORT=1
+
+done

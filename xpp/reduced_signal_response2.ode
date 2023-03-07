@@ -1,0 +1,23 @@
+# a reduced model with AMPK-mTOR double negative feedback to simulate ULK1-AMPK signal response curve with XPP-AUT
+
+# initial conditions
+init AMPK=0, ULK1=0
+
+# differential equations
+# ULK1 represents the active form of ULK1
+ULK1' = (kaulk + kaulk'*AMPK)*(Ulk1T-ULK1)/(Julk + Ulk1T-ULK1) - (kiulk + kiulk'*mTOR)*ULK1/(Julk + ULK1)
+
+# AMPK represents the active form of AMPK
+AMPK' = (kaak + S)*(AMPKT-AMPK)/(jampk + AMPKT-AMPK) - (kiak + kiak'*ULK1 + kiak"*mTOR)*AMPK/(jampk + AMPK)
+
+# steady state function
+# mTOR represents the active form of mTOR
+mTOR = kamtor*mTORT/(kamtor + kimtor + kimtor'*ULK1 + kimtor"*AMPK)
+
+# parameters
+p S=0
+p kaulk=0.01, kaulk'=1, kiulk=0.1, kiulk'=1, julk=0.01, Ulk1T=1
+p kaak=0.2, kaak'=0.75, kiak=0.2, kiak'=5, kiak"=5, AMPKT=1, jampk=0.01
+p kamtor=0.05, kamtor'=0.002, kimtor=0.01, kimtor'=0.1, kimtor"=0.25, mTORT=1
+
+done
