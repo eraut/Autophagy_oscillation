@@ -1,0 +1,23 @@
+# a model to simulate bifurcation diagram when AMPK induces ULK1 throughout an extra protein
+
+# differential equations 
+# ULK1 represents the active form of ULK1
+ULK1' = (kaulk + kaulk'*Prot + kaulk"*AMPK)*(ULK1T-ULK1)/(Julk + ULK1T-ULK1) - (kiulk + kiulk'*mTOR)*ULK1/(Julk + ULK1)
+
+# AMPK represents the active form of AMPK
+AMPK' = (kaak + STARV)*(AMPKT-AMPK)/(Jampk + AMPKT-AMPK) - (kiak + kiak'*ULK1 + kiak"*mTOR)*AMPK/(Jampk + AMPK)
+
+# mTOR represents the active form of mTOR
+mTOR' = kamtor*(mTORT-mTOR) - (kimtor + kimtor'*AMPK + kimtor"*ULK1 + kimtor'"*Prot)*mTOR
+
+# REG represents the active form of extra protein
+REG' = (kareg + kareg'*AMPK)*(REGT - REG)/(Jreg + REGT - REG) - kipr*REG(Jreg + REG)
+
+# parameters
+p STARV=5
+p kaulk=0.101, kaulk'=25, kaulk"=0.03, kiulk=0.1, kiulk'=20, Julk=0.001, ULK1T=1
+p kaak=0.2, kiak=0.1, kiak'=3, kiak"=10, AMPKT=1, Jampk=0.01
+p kamtor=0.0175, kimtor=0.0125, kimtor'=10, kimtor"=0.1, kimtor'"=0.1, Jmtor=0.01, mTORT=1
+p kareg=0.01, kareg'=10, kireg=20, Jreg=0.02, REGT=1
+
+done
