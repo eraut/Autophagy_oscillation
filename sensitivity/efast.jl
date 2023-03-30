@@ -6,8 +6,8 @@ using .Aux_variables
 using .Ode_Model
 
 #Bounds fro each parameter8
-lb = p_predef-p_predef*0.5;
-ub = p_predef+p_predef*0.5;
+lb = p_predef-p_predef*1;
+ub = p_predef+p_predef*1;
 
 param_ranges = makeParamRange(lb,ub)
 
